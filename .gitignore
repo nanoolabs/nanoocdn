@@ -12,7 +12,6 @@ node_modules/
 .idea/
 .dev.vars
 .wrangler/
-wrangler.toml
 
 .dev.vars*
 !.dev.vars.example
