@@ -1,6 +1,6 @@
 # Nanoo CDN
 
-A high-performance CDN edge proxy for nanoo.cloud. it uses Cloudflare Workers to serve files securely from a private Backblaze B2 bucket.
+A high-performance CDN edge proxy for nanoo ecosystems it uses Cloudflare Workers to serve files securely from a private Backblaze B2 bucket.
 
 This project is based on the cloudflare-b2 implementation.
 
@@ -29,7 +29,7 @@ Files in the B2 bucket are organized into these folders ():
 
 ### Prerequisites
 - pnpm installed.
-- A Cloudflare account with the domain nanoo.cloud.
+- A Cloudflare account with the domain nanoolabs.dev
 - A Backblaze B2 account with a private bucket.
 
 ### Local Development
@@ -55,6 +55,12 @@ pnpm dlx wrangler secret put B2_APPLICATION_KEY
 ```bash
 pnpm dlx wrangler deploy
 ```
+
+## Credits
+
+This project uses the following resources:
+- [cloudflare-b2](https://github.com/backblaze-b2-samples/cloudflare-b2) by Backblaze for the original implementation.
+- Cloudflare and Backblaze for providing the bandwidth alliance.
 
 ## License
 This project is licensed under the MIT License and Apache License 2.0.
