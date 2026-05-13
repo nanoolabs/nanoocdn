@@ -1,0 +1,17 @@
+# Wrangler Cloudflare
+.wrangler/**
+
+# Ignore lockfiles
+pnpm-lock.yaml
+
+# Ignore node_modules
+node_modules
+
+# Ignore logs
+*.log
+pnpm-debug.log*
+
+# Ignore environment files
+.dev.vars**
+**.dev.vars**
+**.dev.vars
