@@ -1,0 +1,17 @@
+[
+  {
+    "corsRuleName": "allow-nanoo-labs",
+    "allowedOrigins": [
+      "https://nanoo.biz.id",
+      "https://api.nanoo.biz.id",
+      "https://me.nanoolabs.dev",
+      "https://docs.nanoolabs.dev",
+      "https://nanoolabs.dev",
+      "https://me.nanoolabs.dev"
+    ],
+    "allowedHeaders": ["*"],
+    "allowedOperations": ["s3_get", "s3_head"],
+    "exposeHeaders": ["ETag", "Content-Type", "Content-Length"],
+    "maxAgeSeconds": 3600
+  }
+]

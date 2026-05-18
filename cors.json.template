@@ -1,0 +1,13 @@
+[
+  {
+    "corsRuleName": "allow-your-domain",
+    "allowedOrigins": [
+      "https://your-domain.com",
+      "https://api.your-domain.com"
+    ],
+    "allowedHeaders": ["*"],
+    "allowedOperations": ["s3_get", "s3_head"],
+    "exposeHeaders": ["ETag", "Content-Type", "Content-Length"],
+    "maxAgeSeconds": 3600
+  }
+]
