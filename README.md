@@ -1,66 +1,21 @@
-# Nanoo CDN
+# Nanoo CDN v2.0.0
 
-A high-performance CDN edge proxy for nanoo ecosystems it uses Cloudflare Workers to serve files securely from a private Backblaze B2 bucket.
+High performance, secure edge proxy using cloudflare workers and backblaze B2. 
+zero egress costs, 3ms-9ms TTFB, and AWS SigV4 security
 
-This project is based on the cloudflare-b2 implementation.
+## Quick start
 
-## Architecture
+1. **Install:** `pnpm install`
+2. **Setup:** Create `.dev.vars` from `.dev.vars.templates` and add your `B2_APPLICATION_KEY`
+3. **Dev:** `pnpm dlx wrangler dev` (testing at `http://localhost:8787`)
+4. **Deploy:** `pnpm dlx wrangler deploy`
 
-This service works as a bridge between users and private storage.
+## Documentation
+- **[Architecture & flow](ARCHITECTURE.md)**: Deep dive to the request lifecycle and mermaid diagrams
+- **[Changelog](CHANGELOG.md)**: Track the latest updates and v2.0 improvements
 
-Client -> Cloudflare Worker -> Backblaze B2
-
-The B2 bucket is private. The Worker signs each request using AWS Signature Version 4 and fetches the file from the B2 endpoint. This prevents unauthorized access to your files.
-
-### Benefits
-- No Egress Cost: Moving data from Backblaze B2 to Cloudflare is free because of the Bandwidth Alliance.
-- Edge Caching: Files are cached at Cloudflare edge nodes. This makes delivery faster and reduces costs.
-- Security: Directory listing is disabled. The Worker uses a restricted key that can only read from the nanoo-assets bucket.
-
-<!-- ## Repository Structure
-
-Files in the B2 bucket are organized into these folders ():
-
-- brands/: logos, banners, and icons for Nanoo Cloud.
-- ui/: images and icons for the user interface.
-- public/: general files like fonts and global styles. -->
-
-## Getting Started
-
-### Prerequisites
-- pnpm installed.
-- A Cloudflare account with the domain nanoolabs.dev
-- A Backblaze B2 account with a private bucket.
-
-### Local Development
-1. Install dependencies:
-   ```bash
-   pnpm install
-   ```
-2. Create a .dev.vars file from the .dev.vars.template and add your B2_APPLICATION_KEY.
-3. Start the development server:
-   ```bash
-   pnpm dlx wrangler dev
-   ```
-
-### Deployment
-Deployment is done with Wrangler. You must save your secrets in Cloudflare:
-
-```bash
-# Save your B2 Secret Key (run this once)
-pnpm dlx wrangler secret put B2_APPLICATION_KEY
-```
-
-# Deploy to production
-```bash
-pnpm dlx wrangler deploy
-```
-
-## Credits
-
-This project uses the following resources:
-- [cloudflare-b2](https://github.com/backblaze-b2-samples/cloudflare-b2) by Backblaze for the original implementation.
-- Cloudflare and Backblaze for providing the bandwidth alliance.
+## Credit
+Based on the [cloudflare-b2](https://github.com/backblaze-b2-samples/cloudflare-b2) implementation by backblaze
 
 ## License
-This project is licensed under the MIT License and Apache License 2.0.
+Licensed under MIT and Apache 2.0

@@ -4,12 +4,12 @@
 name = "nanoocdn"
 workers_dev = true
 compatibility_date = "2023-09-04"
-main = "index.js"
+main = "src/index.js"
 upload_source_maps = true
 compatibility_flags = [ "nodejs_compat" ]
 
 [vars]
-B2_APPLICATION_KEY_ID = "0038f4a4d378b380000000003"
+B2_APPLICATION_KEY_ID = "0038f4a4d378b380000000005"
 B2_ENDPOINT = "s3.eu-central-003.backblazeb2.com"
 BUCKET_NAME = "nanoo-assets"
 ALLOW_LIST_BUCKET = "false"

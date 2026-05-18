@@ -5,19 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0] - 2026-05-18
 
-### Fixed
-
-- Updated README to use current `npm create cloudflare` and `npx wrangler deploy` commands ([@harrisonratcliffe](https://github.com/harrisonratcliffe/))
-- Fixed comments around RCLONE_DOWNLOAD in wrangler.toml.template ([@jingyuanliang](https://github.com/jingyuanliang/))
-- Do not sign conditional request headers, since they are not always passed upstream by Cloudflare.
-- Fixed `RCLONE_DOWNLOAD` option so that bucket name can be passed in the path.
+### Added
+- Integration Cloudflare cache API for 300x faster TTFB (3ms-9ms on HIT)
+- Refactore codebase to `src/` and `src/lib/` for better maintain
+- Add `ARCHITECTURE.md` with Mermaid diagram
+- add Log prefix `[CACHE]`, `[SIGN]`, and `[B2]`
 
 ### Changed
+- Move main entry point to `src/index.js`
+- Enhance header filtering and path sanitization logic
 
-- Bumped direct dependencies to current versions, moved `wrangler` to `devDependencies`.
-- Removed user-agent check for rcloneDownload - this allows other clients to use B2 friendly URLs.
+### Fixed
+- Resolve `TypeError` when modification headers for cache API
+- Update README to use current `pnpm create cloudflare` and `pnpm dlx wrangler deploy` command
+- Fix `RCLONE_DOWNLOAD` option so that bucket name can be passed in the path
+
 
 ## [1.2.0] - 2024-10-09
 
