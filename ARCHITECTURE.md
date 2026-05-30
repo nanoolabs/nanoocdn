@@ -43,16 +43,16 @@ sequenceDiagram
     participant W as Worker (src/index.js)
     participant B as Backblaze B2 (Origin)
 
-    U->>E: GET /assets/logo.png
+    U->>E: GET /assets/nanoo_logo.png
     alt Cache HIT
-        E-->>U: Return file (very fast)
+        E-->>U: Return File (It's Very Fast)
     else Cache MISS
         E->>W: Forward Request
         W->>W: Clean Path & Headers
         W->>W: Sign Request for Security
         W->>B: Send Request to B2
         B-->>W: 200 OK / 206 Partial Content
-        W->>E: Save file to Cache
+        W->>E: Save File to Cache
         W-->>U: Return File
     end
 ```

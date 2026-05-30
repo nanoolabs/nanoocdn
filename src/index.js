@@ -10,6 +10,7 @@ import {
 } from './lib/utils.js'
 import { signRequest, getUpstreamHostname } from './lib/signer.js'
 import { getCacheResponse, saveToCache } from './lib/cache.js'
+import { homePage } from './lib/home.js'
 
 // How many times to retry a range request where the response is missing content-range
 const RANGE_RETRY_ATTEMPTS = 3
@@ -18,6 +19,16 @@ const RANGE_RETRY_ATTEMPTS = 3
 // noinspection JSUnusedGlobalSymbols
 export default {
   async fetch(request, env, ctx) {
+    const url = new URL(request.url)
+    const path = sanitizePath(url.pathname)
+
+    // Serve home page for root path
+    if (path === '' || path === '/') {
+      return new Response(homePage, {
+        headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+      })
+    }
+
     // Only allow GET and HEAD methods
     if (!['GET', 'HEAD'].includes(request.method)) {
       return new Response(null, {

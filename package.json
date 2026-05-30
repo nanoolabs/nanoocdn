@@ -1,18 +1,21 @@
 {
   "private": true,
   "name": "cloudflare-b2",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Provide access to a private Backblaze B2 bucket via a Cloudflare Worker",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write '**/*.{js,css,json,md}'"
+    "format": "prettier --write '**/*.{js,json,md}'",
+    "setup": "pnpm run setup-vars && pnpm run setup-cors",
+    "setup-cors": "test -f cors.json || cp templates/cors.json.example cors.json",
+    "setup-vars": "test -f .dev.vars || cp templates/dev.vars.example .dev.vars"
   },
   "author": "Pat Patterson <pat@backblaze.com>",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "wrangler": "^4.90.1"
+    "prettier": "^3.8.3",
+    "wrangler": "^4.95.0"
   },
   "dependencies": {
     "aws4fetch": "^1.0.20"
