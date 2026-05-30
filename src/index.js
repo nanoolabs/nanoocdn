@@ -48,9 +48,6 @@ export default {
     }
     console.log('[CACHE] MISS:', new URL(request.url).pathname)
 
-    const url = new URL(request.url)
-    const path = sanitizePath(url.pathname)
-
     // Reject list bucket requests unless configuration allows it
     if (
       isListBucketRequest(env, path) &&
