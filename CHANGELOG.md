@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2026-05-31
+
+### Added
+- Smart Cache Control header base on file extensions (v2.1.1)
+
+### Fixed
+- Clean up git cache to ignore `cors.json`
+- Resolve variable redeclaration in `src/index.js`
+- Update Node.js version to v22 in GitHub Action
+- Rollback `compatibility_date` to 2023-09-04 for stability
+
+## [2.1.0] - 2026-05-30
+
+### Added
+- New Minimalist Home page (src/lib/home.js)
+- Ecosystem adjustment and centralize template management
+- Cloudflare static assets support (currently disable in config)
+
 ## [2.0.0] - 2026-05-18
 
 ### Added

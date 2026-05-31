@@ -143,7 +143,7 @@ export const homePage = `
 
     <footer>
         <div>&copy; 2026 NANOO LABS</div>
-        <div>V2.1.0</div>
+        <div>V2.1.1</div>
     </footer>
 </body>
 </html>
