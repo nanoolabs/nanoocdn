@@ -136,6 +136,36 @@ export default {
 
     // Cache the response if it's successful (200 or 206)
     if (response.ok) {
+      // Set cache header base on file extension
+      const extension = path.split('.').pop().toLowerCase()
+      const staticExtension = [
+        'woff2',
+        'woff',
+        'png',
+        'jpg',
+        'jpeg',
+        'svg',
+        'webp',
+        'ico',
+        'css',
+        'js',
+      ]
+
+      // Clone response to modify header
+      response = new Response(response.body, response)
+
+      if (staticExtension.includes(extension)) {
+        response.headers.set(
+          'Cache-Control',
+          'public, max-age=31536000, immutable',
+        )
+      } else {
+        response.headers.set(
+          'Cache-Control',
+          'public, max-age=3600, must-revalidate',
+        )
+      }
+
       console.log('[CACHE] Saving...')
       await saveToCache(request, response, ctx)
       console.log('[CACHE] Success')
