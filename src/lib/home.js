@@ -7,8 +7,8 @@ export const homePage = `
     <title>NANOO CDN | EDGE ECOSYSTEMS</title>
     <style>
         @font-face {
-            font-family: 'Geist';
-            src: url('/assets/fonts/geist-sans-latin-400-normal.woff2') format('woff2');
+            font-family: 'Geist Mono';
+            src: url('/assets/fonts/geist-mono-latin-400-normal.woff2') format('woff2');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -27,7 +27,7 @@ export const homePage = `
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: "Geist", monospace;
+            font-family: "Geist Mono", monospace;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -143,7 +143,7 @@ export const homePage = `
 
     <footer>
         <div>&copy; 2026 NANOO LABS</div>
-        <div>V2.1.1</div>
+        <div>V2.1.2</div>
     </footer>
 </body>
 </html>
