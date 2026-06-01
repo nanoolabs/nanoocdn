@@ -1,4 +1,4 @@
-# Nanoo CDN v2.1.1
+# Nanoo CDN v2.1.2
 
 High performance, secure edge proxy using cloudflare workers and backblaze B2.
 zero egress costs, 3ms-9ms TTFB, and AWS SigV4 security
@@ -12,6 +12,7 @@ zero egress costs, 3ms-9ms TTFB, and AWS SigV4 security
 
 ## Documentation
 
+- **[Project Structure](TREE.md)**: File tree and directory overview
 - **[Architecture & flow](ARCHITECTURE.md)**: Deep dive to the request lifecycle and mermaid diagrams
 - **[Changelog](CHANGELOG.md)**: Track the latest updates and v2.0 improvements
 
