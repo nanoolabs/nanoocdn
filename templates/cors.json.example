@@ -4,7 +4,7 @@
     "allowedOrigins": [
       "https://example.com",
       "https://example.dev",
-      "https://example.org",
+      "https://example.org"
     ],
     "allowedHeaders": ["*"],
     "allowedOperations": [

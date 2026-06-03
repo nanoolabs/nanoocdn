@@ -10,10 +10,30 @@ import {
 } from './lib/utils.js'
 import { signRequest, getUpstreamHostname } from './lib/signer.js'
 import { getCacheResponse, saveToCache } from './lib/cache.js'
-import { homePage } from './lib/home.js'
+import { homePage, errorPage } from './lib/home.js'
 
 // How many times to retry a range request where the response is missing content-range
 const RANGE_RETRY_ATTEMPTS = 3
+
+/**
+ * Strips sensitive B2/S3 header from the response to mask the origin eco
+ * @param {Response} response
+ * @returns {Headers}
+ */
+function cleanHeaders(response) {
+  const headers = new Headers(response.headers)
+  const headersToRemove = [
+    'x-amz-request-id',
+    'x-amz-id-2',
+    'x-bz-content-sha1',
+    'x-bz-upload-timestamp',
+    'x-bz-upload-url',
+    'x-bz-info-author',
+    'Server',
+  ]
+  headersToRemove.forEach((h) => headers.delete(h))
+  return headers
+}
 
 // Supress IntelliJ's "unused default export" warning
 // noinspection JSUnusedGlobalSymbols
@@ -41,10 +61,17 @@ export default {
     const cachedResponse = await getCacheResponse(request)
     if (cachedResponse) {
       console.log('[CACHE] HIT:', new URL(request.url).pathname)
+      const cleanedCachedHeaders = cleanHeaders(cachedResponse)
+      const cleanCachedResponse = new Response(cachedResponse.body, {
+        status: cachedResponse.status,
+        statusText: cachedResponse.statusText,
+        headers: cleanedCachedHeaders,
+      })
+
       // Original request was HEAD, so return a new Response without a body
       return request.method === 'HEAD'
-        ? createHeadResponse(cachedResponse)
-        : cachedResponse
+        ? createHeadResponse(cleanCachedResponse)
+        : cleanCachedResponse
     }
     console.log('[CACHE] MISS:', new URL(request.url).pathname)
 
@@ -139,16 +166,49 @@ export default {
       // Set cache header base on file extension
       const extension = path.split('.').pop().toLowerCase()
       const staticExtension = [
+        // Fonts
         'woff2',
         'woff',
+        'ttf',
+        'otf',
+        // Images
         'png',
         'jpg',
         'jpeg',
         'svg',
         'webp',
         'ico',
+        'avif',
+        // Scripts, Styles & Runtimes
         'css',
         'js',
+        'mjs',
+        'map',
+        'wasm',
+        'astro',
+        // Documents
+        'pdf',
+        'json',
+        'xml',
+        'txt',
+        // Archives & Binaries
+        'zip',
+        'gz',
+        'br',
+        'tar',
+        'apk',
+        'exe',
+        'AppImage',
+        'dmg',
+        // Media
+        'mp4',
+        'webm',
+        'mp3',
+        'wav',
+        'flac',
+        'ogg',
+        'mpd',
+        'm3u8',
       ]
 
       // Clone response to modify header
@@ -169,14 +229,28 @@ export default {
       console.log('[CACHE] Saving...')
       await saveToCache(request, response, ctx)
       console.log('[CACHE] Success')
+    } else {
+      // Unified 404: If response is not ok (403, 404, 500), return custom 404 page
+      return new Response(errorPage, {
+        status: 404,
+        headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+      })
     }
+
+    const finalHeaders = cleanHeaders(response)
 
     if (requestMethod === 'HEAD') {
       // Original request was HEAD, so return a new Response without a body
-      return createHeadResponse(response)
+      return createHeadResponse(
+        new Response(null, { headers: finalHeaders, status: response.status }),
+      )
     }
 
     // Return whatever response we have rather than an error response
-    return response
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: finalHeaders,
+    })
   },
 }

@@ -5,18 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.3] - 2026-05-31
+
+### Added
+
+- Implement "Unified 404" strategy: mask origin errors (403, 500) with a custom 404 page
+- Automated header stripping (`x-amz-*`, `x-bz-*`, `Server`) for origin shield
+- Custom minimalist 404 error page matching brand identity
+
 ## [2.1.2] - 2026-05-31
 
 ### Changed
+
 - Switch font from Geist Sans to Geist Mono for a more technical look
 - Update compatibility_date to 2024-09-25 and enable static assets
 
 ## [2.1.1] - 2026-05-31
 
 ### Added
+
 - Smart Cache Control header base on file extensions (v2.1.1)
 
 ### Fixed
+
 - Clean up git cache to ignore `cors.json`
 - Resolve variable redeclaration in `src/index.js`
 - Update Node.js version to v22 in GitHub Action
@@ -25,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2026-05-30
 
 ### Added
+
 - New Minimalist Home page (src/lib/home.js)
 - Ecosystem adjustment and centralize template management
 - Cloudflare static assets support (currently disable in config)

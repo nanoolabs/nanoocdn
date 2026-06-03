@@ -143,8 +143,63 @@ export const homePage = `
 
     <footer>
         <div>&copy; 2026 NANOO LABS</div>
-        <div>V2.1.2</div>
+        <div>V2.1.3</div>
     </footer>
+</body>
+</html>
+`
+
+export const errorPage = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | NOT FOUND</title>
+    <style>
+        @font-face {
+            font-family: 'Geist Mono';
+            src: url('/assets/fonts/geist-mono-latin-400-normal.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            background: #050505;
+            color: #ffffff;
+            font-family: "Geist Mono", monospace;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            font-size: 13px;
+        }
+
+        .container {
+            border-left: 2px solid #00ffff;
+            padding: 1rem 2rem;
+        }
+
+        .code {
+           color: #00ffff
+           font-weight: 600
+           margin-bottom: 0.5rem
+        }
+        .message {
+           opacity: 0.5
+           text-transform: uppercase
+           letter-spacing: 0.1em
+           font-size: 10px
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="code">ERROR CODE: 404</div>
+        <div class="message">RESOURCE NOT FOUND OR RESTRICTED [ ∅_∅ ]</div>
+    </div>
 </body>
 </html>
 `
