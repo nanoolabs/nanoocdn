@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-06-03
+
+### Added
+- Implement **Secret Header Authentication** (Bearer token) for CDN shield
+- Smart CORS validation based on `ALLOWED_ORIGIN` environment variable
+- Automated `OPTIONS` preflight handling at the Edge
+- Origin shield: Ensure client `Authorization` header is stripped before upstream fetch
+- Protection against unauthorized hotlinking and resource scraping
+
 ## [2.1.3] - 2026-05-31
 
 ### Added

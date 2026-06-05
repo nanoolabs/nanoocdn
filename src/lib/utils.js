@@ -1,5 +1,6 @@
 const UNSIGNABLE_HEADERS = [
   // These headers appear in the request, but are never passed upstream
+  'authorization',
   'x-forwarded-proto',
   'x-real-ip',
   // We can't include accept-encoding in the signature because Cloudflare

@@ -42,9 +42,39 @@ export default {
     const url = new URL(request.url)
     const path = sanitizePath(url.pathname)
 
+    // Handle CORS
+    const origin = request.headers.get('Origin')
+    const allowedOrigins = (env.ALLOWED_ORIGINS || '').split(',')
+    const isAllowedOrigin = allowedOrigins.includes(origin)
+
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Origin': isAllowedOrigin ? origin : allowedOrigins[0],
+          'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
+          'Access-Control-Allow-Headers': 'Authorization, Content-Type, Range',
+          'Access-Control-Max-Age': '86400',
+        },
+      })
+    }
+
     // Serve home page for root path
     if (path === '' || path === '/') {
       return new Response(homePage, {
+        headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+      })
+    }
+
+    // Secret Header Authentication (Bearer)
+    // We only skip this for root path (landing page)
+    const authHeader = request.headers.get('Authorization')
+    const expectedSecret = env.CDN_SECRET
+
+    if (expectedSecret && authHeader !== `Bearer ${expectedSecret}`) {
+      console.error('[AUTH] Unauthorized access attempt')
+      return new Response(errorPage, {
+        status: 404,
         headers: { 'Content-Type': 'text/html;charset=UTF-8' },
       })
     }
@@ -247,10 +277,16 @@ export default {
     }
 
     // Return whatever response we have rather than an error response
-    return new Response(response.body, {
+    const finalResponse = new Response(response.body, {
       status: response.status,
       statusText: response.statusText,
       headers: finalHeaders,
     })
+
+    if (isAllowedOrigin) {
+      finalResponse.headers.set('Access-Control-Allow-Origin', origin)
+    }
+
+    return finalResponse
   },
 }
