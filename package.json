@@ -11,7 +11,10 @@
     "setup-cors": "test -f cors.json || cp templates/cors.json.example cors.json",
     "setup-vars": "test -f .dev.vars || cp templates/dev.vars.example .dev.vars"
   },
-  "author": "Pat Patterson <pat@backblaze.com>",
+  "author": "Adnan Slamet Wibowo <adnan@nanoolabs.dev>",
+  "contributors": [
+    "Pat Patterson <pat@backblaze.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "prettier": "^3.8.3",

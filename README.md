@@ -1,4 +1,4 @@
-# Nanoo CDN v2.1.2
+# Nanoo CDN v2.2.0
 
 High performance, secure edge proxy using cloudflare workers and backblaze B2.
 zero egress costs, 3ms-9ms TTFB, and AWS SigV4 security
@@ -23,3 +23,5 @@ Based on the [cloudflare-b2](https://github.com/backblaze-b2-samples/cloudflare-
 ## License
 
 Licensed under MIT and Apache 2.0
+
+> Original implementation by Pat Patterson (@backblaze). Refactored, secured, and modernized by Nanoo Labs
