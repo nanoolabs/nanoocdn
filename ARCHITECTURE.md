@@ -8,52 +8,59 @@ This diagram shows the steps the Worker takes for each new request. It also show
 
 ```mermaid
 graph TD
-    A[User Request] --> B{Method GET/HEAD?}
-    B -- No --> C[Return 405 Method Not Allowed]
-    B -- Yes --> D[Generate cacheKey]
+    A[User Request] --> B[Sanitize Path]
+    B --> C{Origin/Referer Allowed?}
+    C -- No --> D[Return 403 Forbidden]
+    C -- Yes --> E{Method OPTIONS?}
+    
+    E -- Yes --> F[Return CORS Preflight]
+    E -- No --> G{Root Path /?}
+    
+    G -- Yes --> H[Return Home Page]
+    G -- No --> I{Method GET/HEAD?}
+    
+    I -- No --> J[Return 405 Method Not Allowed]
+    I -- Yes --> K[Check Edge Cache]
 
-    D --> E{Cache HIT?}
-    E -- Yes --> F[Return Cached Response]
-    E -- No --> G[Clean the URL Path]
-
-    G --> H{List Bucket Request?}
-    H -- Yes --> I[Return 404/Forbidden]
-    H -- No --> J[Sign Request for Security]
-
-    J --> K{Range Header Present?}
-    K -- Yes --> L[Fetch from B2 with Retries]
-    K -- No --> M[Fetch from B2]
-
-    L --> N{Response OK?}
-    M --> N
-
-    N -- Yes --> O[Save to Edge Cache]
-    O --> P[Return File to User]
-    N -- No --> Q[Return Error Response]
+    K -- HIT --> L[Return Cached Response]
+    K -- MISS --> M{List Bucket Request?}
+    
+    M -- Yes --> N[Return 404 Not Found]
+    M -- No --> O[Sign Request (SigV4)]
+    
+    O --> P[Fetch from B2 Origin]
+    P --> Q{Response OK?}
+    
+    Q -- Yes --> R[Save to Cache & Return File]
+    Q -- No --> S[Return 404 Error Page]
 ```
 
 ## Step by step request flow
 
-This diagram shows how the User, Cloudflare, and backblaze B2 talk to each other.
+This diagram shows how the User, Cloudflare, and Backblaze B2 talk to each other.
 
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant E as Cloudflare Edge Cache
     participant W as Worker (src/index.js)
+    participant E as Edge Cache
     participant B as Backblaze B2 (Origin)
 
-    U->>E: GET /assets/nanoo_logo.png
-    alt Cache HIT
-        E-->>U: Return File (It's Very Fast)
-    else Cache MISS
-        E->>W: Forward Request
-        W->>W: Clean Path & Headers
-        W->>W: Sign Request for Security
-        W->>B: Send Request to B2
-        B-->>W: 200 OK / 206 Partial Content
-        W->>E: Save File to Cache
-        W-->>U: Return File
+    U->>W: GET /assets/image.png
+    W->>W: Validate Origin & Referer
+    alt Not Allowed
+        W-->>U: 403 Forbidden
+    else Allowed
+        W->>E: Check Cache
+        alt Cache HIT
+            E-->>U: Return File (Fast)
+        else Cache MISS
+            W->>W: Sign Request (AWS SigV4)
+            W->>B: Fetch from Origin
+            B-->>W: 200 OK
+            W->>E: Store in Cache
+            W-->>U: Return File
+        end
     end
 ```
 

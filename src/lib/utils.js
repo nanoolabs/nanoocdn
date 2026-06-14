@@ -28,8 +28,8 @@ export function filterHeaders(headers, env) {
           pair[0].startsWith('cf-') ||
           ('ALLOWED_HEADERS' in env &&
             !env['ALLOWED_HEADERS'].includes(pair[0]))
-        ),
-    ),
+        )
+    )
   )
 }
 

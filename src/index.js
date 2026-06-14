@@ -42,18 +42,38 @@ export default {
     const url = new URL(request.url)
     const path = sanitizePath(url.pathname)
 
-    // Handle CORS
-    const origin = request.headers.get('Origin')
-    const allowedOrigins = (env.ALLOWED_ORIGINS || '').split(',')
-    const isAllowedOrigin = allowedOrigins.includes(origin)
+    // 1. Parse allowed origins
+    const allowedOrigins = (env.ALLOWED_ORIGINS || '')
+      .split(',')
+      .map((o) => o.trim())
+    const isWildcard = allowedOrigins.includes('*')
 
+    // 2. Determine if request is allow (origin or referer check)
+    const origin = request.headers.get('Origin')
+    const referer = request.headers.get('Referer')
+    let refererOrigin = null
+    try {
+      refererOrigin = referer ? new URL(referer).origin : null
+    } catch (e) {
+      // Ignore invalid referer URL
+    }
+
+    const isAllowed =
+      isWildcard ||
+      (origin && allowedOrigins.includes(origin)) ||
+      (refererOrigin && allowedOrigins.includes(refererOrigin)) ||
+      (!origin && !referer) // Allow direct access
+
+    // Handle OPTIONS
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
         headers: {
-          'Access-Control-Allow-Origin': isAllowedOrigin ? origin : allowedOrigins[0],
+          'Access-Control-Allow-Origin': isAllowed
+            ? origin || '*'
+            : allowedOrigins[0] || '*',
           'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
-          'Access-Control-Allow-Headers': 'Authorization, Content-Type, Range',
+          'Access-Control-Allow-Headers': 'Content-Type, Range',
           'Access-Control-Max-Age': '86400',
         },
       })
@@ -66,15 +86,14 @@ export default {
       })
     }
 
-    // Secret Header Authentication (Bearer)
-    // We only skip this for root path (landing page)
-    const authHeader = request.headers.get('Authorization')
-    const expectedSecret = env.CDN_SECRET
-
-    if (expectedSecret && authHeader !== `Bearer ${expectedSecret}`) {
-      console.error('[AUTH] Unauthorized access attempt')
+    // Block unauthorized origins/referers
+    if (!isAllowed) {
+      console.error(
+        '[CORS] Unauthorized access attempt from:',
+        origin || refererOrigin || 'unknown'
+      )
       return new Response(errorPage, {
-        status: 404,
+        status: 403,
         headers: { 'Content-Type': 'text/html;charset=UTF-8' },
       })
     }
@@ -160,14 +179,14 @@ export default {
           // Only log if it didn't work first time
           if (attempts < RANGE_RETRY_ATTEMPTS) {
             console.log(
-              `[B2] Retry for ${signedRequest.url} succeeded - response has content-range header`,
+              `[B2] Retry for ${signedRequest.url} succeeded - response has content-range header`
             )
           }
           break
         } else if (response.ok) {
           attempts -= 1
           console.error(
-            `[B2] Range header in request for ${signedRequest.url} but no content-range header in response. Will retry ${attempts} more times`,
+            `[B2] Range header in request for ${signedRequest.url} but no content-range header in response. Will retry ${attempts} more times`
           )
           // Do not abort on the last attempt, as we want to return the response
           if (attempts > 0) {
@@ -181,7 +200,7 @@ export default {
 
       if (attempts <= 0) {
         console.error(
-          `[B2] Tried range request for ${signedRequest.url} ${RANGE_RETRY_ATTEMPTS} times, but no content-range in response.`,
+          `[B2] Tried range request for ${signedRequest.url} ${RANGE_RETRY_ATTEMPTS} times, but no content-range in response.`
         )
       }
     } else {
@@ -247,12 +266,12 @@ export default {
       if (staticExtension.includes(extension)) {
         response.headers.set(
           'Cache-Control',
-          'public, max-age=31536000, immutable',
+          'public, max-age=31536000, immutable'
         )
       } else {
         response.headers.set(
           'Cache-Control',
-          'public, max-age=3600, must-revalidate',
+          'public, max-age=3600, must-revalidate'
         )
       }
 
@@ -272,7 +291,7 @@ export default {
     if (requestMethod === 'HEAD') {
       // Original request was HEAD, so return a new Response without a body
       return createHeadResponse(
-        new Response(null, { headers: finalHeaders, status: response.status }),
+        new Response(null, { headers: finalHeaders, status: response.status })
       )
     }
 
@@ -283,8 +302,10 @@ export default {
       headers: finalHeaders,
     })
 
-    if (isAllowedOrigin) {
+    if (isAllowed && origin) {
       finalResponse.headers.set('Access-Control-Allow-Origin', origin)
+    } else if (isAllowed && isWildcard) {
+      finalResponse.headers.set('Access-Control-Allow-Origin', '*')
     }
 
     return finalResponse

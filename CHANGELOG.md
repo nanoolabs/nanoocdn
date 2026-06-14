@@ -5,14 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.0] - 2026-06-03
+## [2.2.0] - 2026-06-14
 
 ### Added
-- Implement **Secret Header Authentication** (Bearer token) for CDN shield
-- Smart CORS validation based on `ALLOWED_ORIGIN` environment variable
-- Automated `OPTIONS` preflight handling at the Edge
-- Origin shield: Ensure client `Authorization` header is stripped before upstream fetch
-- Protection against unauthorized hotlinking and resource scraping
+
+- Added **CORS and Referer checks** to keep assets safe.
+- Added support for **wildcards (*)** in the allowed origins list.
+- Allowed **direct access** to files for easier sharing and debugging.
+- Added automatic `OPTIONS` request handling for browsers.
+- Added **Origin Shield** to hide private information from Backblaze B2.
+
+### Changed
+
+- Removed strict Bearer token login to make using the CDN easier.
 
 ## [2.1.3] - 2026-05-31
 
