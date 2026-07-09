@@ -12,25 +12,25 @@ graph TD
     B --> C{Origin/Referer Allowed?}
     C -- No --> D[Return 403 Forbidden]
     C -- Yes --> E{Method OPTIONS?}
-    
+
     E -- Yes --> F[Return CORS Preflight]
     E -- No --> G{Root Path /?}
-    
+
     G -- Yes --> H[Return Home Page]
     G -- No --> I{Method GET/HEAD?}
-    
+
     I -- No --> J[Return 405 Method Not Allowed]
     I -- Yes --> K[Check Edge Cache]
 
     K -- HIT --> L[Return Cached Response]
     K -- MISS --> M{List Bucket Request?}
-    
+
     M -- Yes --> N[Return 404 Not Found]
     M -- No --> O[Sign Request (SigV4)]
-    
+
     O --> P[Fetch from B2 Origin]
     P --> Q{Response OK?}
-    
+
     Q -- Yes --> R[Save to Cache & Return File]
     Q -- No --> S[Return 404 Error Page]
 ```

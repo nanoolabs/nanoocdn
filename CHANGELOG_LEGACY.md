@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added **CORS and Referer checks** to keep assets safe.
-- Added support for **wildcards (*)** in the allowed origins list.
+- Added support for **wildcards (\*)** in the allowed origins list.
 - Allowed **direct access** to files for easier sharing and debugging.
 - Added automatic `OPTIONS` request handling for browsers.
 - Added **Origin Shield** to hide private information from Backblaze B2.
