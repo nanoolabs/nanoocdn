@@ -41,6 +41,7 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
     const path = sanitizePath(url.pathname)
+    const log = env?.DEBUG ? console.log : () => {}
 
     // 1. Parse allowed origins
     const allowedOrigins = (env.ALLOWED_ORIGINS || '')
@@ -109,7 +110,7 @@ export default {
     // Edge Caching: Check if we have a HIT before doing any heavy lifting.
     const cachedResponse = await getCacheResponse(request)
     if (cachedResponse) {
-      console.log('[CACHE] HIT:', new URL(request.url).pathname)
+      log('[CACHE] HIT:', new URL(request.url).pathname)
       const cleanedCachedHeaders = cleanHeaders(cachedResponse)
       const cleanCachedResponse = new Response(cachedResponse.body, {
         status: cachedResponse.status,
@@ -122,7 +123,7 @@ export default {
         ? createHeadResponse(cleanCachedResponse)
         : cleanCachedResponse
     }
-    console.log('[CACHE] MISS:', new URL(request.url).pathname)
+    log('[CACHE] MISS:', new URL(request.url).pathname)
 
     // Reject list bucket requests unless configuration allows it
     if (
@@ -152,9 +153,9 @@ export default {
     }
 
     // Sign the outgoing request
-    console.log('[SIGN] Requesting:', url.toString())
+    log('[SIGN] Requesting:', url.toString())
     const signedRequest = await signRequest(request, env, url)
-    console.log('[SIGN] Success')
+    log('[SIGN] Success')
 
     // Save the request method, so we can process responses for HEAD requests appropriately
     const requestMethod = request.method
@@ -165,7 +166,7 @@ export default {
     // See https://community.cloudflare.com/t/cloudflare-worker-fetch-ignores-byte-request-range-on-initial-request/395047/4
     let response
     if (signedRequest.headers.has('range')) {
-      console.log('[B2] Fetching range request...')
+      log('[B2] Fetching range request...')
       let attempts = RANGE_RETRY_ATTEMPTS
       do {
         const controller = new AbortController()
@@ -174,11 +175,11 @@ export default {
           headers: signedRequest.headers,
           signal: controller.signal,
         })
-        console.log('[B2] Range response status:', response.status)
+        log('[B2] Range response status:', response.status)
         if (response.headers.has('content-range')) {
           // Only log if it didn't work first time
           if (attempts < RANGE_RETRY_ATTEMPTS) {
-            console.log(
+            log(
               `[B2] Retry for ${signedRequest.url} succeeded - response has content-range header`
             )
           }
@@ -204,10 +205,10 @@ export default {
         )
       }
     } else {
-      console.log('[B2] Fetching full request...')
+      log('[B2] Fetching full request...')
       // Send the signed request to B2
       response = await fetch(signedRequest)
-      console.log('[B2] Full response status:', response.status)
+      log('[B2] Full response status:', response.status)
     }
 
     // Cache the response if it's successful (200 or 206)
@@ -275,9 +276,9 @@ export default {
         )
       }
 
-      console.log('[CACHE] Saving...')
+      log('[CACHE] Saving...')
       await saveToCache(request, response, ctx)
-      console.log('[CACHE] Success')
+      log('[CACHE] Success')
     } else {
       // Unified 404: If response is not ok (403, 404, 500), return custom 404 page
       return new Response(errorPage, {
