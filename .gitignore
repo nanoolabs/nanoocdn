@@ -12,8 +12,3 @@ node_modules/
 .idea/
 .dev.vars
 .wrangler/
-
-.dev.vars
-cors.json
-templates/*.example
-!templates/*.example
