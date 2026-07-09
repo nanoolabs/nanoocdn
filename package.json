@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "cloudflare-b2",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Provide access to a private Backblaze B2 bucket via a Cloudflare Worker",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{js,json,md}'",
-    "setup": "cp templates/dev.vars.example .dev.vars"
+    "setup": "cp .dev.vars.example .dev.vars"
   },
   "author": "Adnan Slamet Wibowo <adnan@nanoolabs.dev>",
   "contributors": [
