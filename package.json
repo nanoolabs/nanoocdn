@@ -1,15 +1,13 @@
 {
   "private": true,
   "name": "cloudflare-b2",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Provide access to a private Backblaze B2 bucket via a Cloudflare Worker",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{js,json,md}'",
-    "setup": "pnpm run setup-vars && pnpm run setup-cors",
-    "setup-cors": "test -f cors.json || cp templates/cors.json.example cors.json",
-    "setup-vars": "test -f .dev.vars || cp templates/dev.vars.example .dev.vars"
+    "setup": "cp templates/dev.vars.example .dev.vars"
   },
   "author": "Adnan Slamet Wibowo <adnan@nanoolabs.dev>",
   "contributors": [
