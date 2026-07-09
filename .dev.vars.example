@@ -1,3 +1,19 @@
-# Configuration for running the app in local dev mode
-B2_APPLICATION_KEY = "your b2 application key"
-ALLOWED_ORIGINS = "http://localhost:5173,http://localhost:3000,https://check.example.com"
+# =============================================================================
+# Nanoo CDN — Local Dev env config
+# =============================================================================
+# Copy this file to .dev.vars (or run `pnpm run setup`) and fill in value.
+# .dev.vars is gitignored - secrets stay local.
+# =============================================================================
+
+# Cloudflare Worker live logs in terminal (wrangler dev).
+# Set "true" to see [CACHE], [SIGN], [B2] debug logs
+DEBUG = "true"
+
+# Backblaze B2 Application Key (secret).
+# Get in from B2 : https://secure.backblaze.com/app_keys.htm
+B2_APPLICATION_KEY = "your-b2-application-key"
+
+# Allowed CORS origins for local development.
+# Comma separate. add your frontend dev server port or your domain here.
+# Use "*" to allow all origins (not recommend for prod)
+ALLOWED_ORIGINS = "http://localhost:8787,http://localhost:4321,https://login.example.dev"
