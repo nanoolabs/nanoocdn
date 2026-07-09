@@ -17,7 +17,6 @@ B2_ENDPOINT = "s3.eu-central-003.backblazeb2.com"
 BUCKET_NAME = "nanoo-assets"
 ALLOW_LIST_BUCKET = "false"
 RCLONE_DOWNLOAD = "false"
-ALLOWED_ORIGINS = "https://nanoo.biz.id,https://me.nanoolabs.dev,https://stack.nanoolabs.dev,https://api.nanoolabs.dev,https://docs.nanoolabs.dev,https://nanoolabs.dev,https://root.nanoolabs.dev,https://webrings.nanoolabs.dev"
 
 [observability]
 enabled = true
