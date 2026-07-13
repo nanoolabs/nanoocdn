@@ -5,35 +5,13 @@ export const homePage = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NANOO CDN | EDGE ECOSYSTEMS</title>
+    <link rel="stylesheet" href="/assets/cdn.css">
     <style>
-        @font-face {
-            font-family: 'Geist Mono';
-            src: url('/assets/fonts/geist-mono-latin-400-normal.woff2') format('woff2');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        :root {
-            --bg: #050505;
-            --accent: #00ffff;
-            --border: #1a1a1a;
-            --text: #a0a0a0;
-            --text-bright: #ffffff;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: "Geist Mono", monospace;
             height: 100vh;
             display: flex;
             flex-direction: column;
             padding: 2rem;
-            font-size: 13px;
-            letter-spacing: -0.01em;
         }
 
         header {
@@ -143,7 +121,7 @@ export const homePage = `
 
     <footer>
         <div>&copy; 2026 NANOO LABS</div>
-        <div>V2.2.0</div>
+        <div>{{VERSION}}</div>
     </footer>
 </body>
 </html>
@@ -156,42 +134,32 @@ export const errorPage = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 | NOT FOUND</title>
+    <link rel="stylesheet" href="/assets/cdn.css">
     <style>
-        @font-face {
-            font-family: 'Geist Mono';
-            src: url('/assets/fonts/geist-mono-latin-400-normal.woff2') format('woff2');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-
         body {
-            background: #050505;
-            color: #ffffff;
-            font-family: "Geist Mono", monospace;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            font-size: 13px;
         }
 
         .container {
-            border-left: 2px solid #00ffff;
+            border-left: 2px solid var(--accent);
             padding: 1rem 2rem;
         }
 
         .code {
-           color: #00ffff
-           font-weight: 600
-           margin-bottom: 0.5rem
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
+
         .message {
-           opacity: 0.5
-           text-transform: uppercase
-           letter-spacing: 0.1em
-           font-size: 10px
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 10px;
         }
     </style>
 </head>
