@@ -12,11 +12,12 @@ compatibility_flags = [ "nodejs_compat" ]
 directory = "./public/"
 
 [vars]
-B2_APPLICATION_KEY_ID = "0038f4a4d378b380000000011"
+B2_APPLICATION_KEY_ID = "0038f4a4d378b380000000013"
 B2_ENDPOINT = "s3.eu-central-003.backblazeb2.com"
 BUCKET_NAME = "nanoo-assets"
 ALLOW_LIST_BUCKET = "false"
 RCLONE_DOWNLOAD = "false"
+CDN_VERSION = "2.2.4"
 
 [observability]
 enabled = true
