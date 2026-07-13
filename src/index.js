@@ -82,7 +82,8 @@ export default {
 
     // Serve home page for root path
     if (path === '' || path === '/') {
-      return new Response(homePage, {
+      const page = homePage.replace('{{VERSION}}', env['CDN_VERSION'] || '')
+      return new Response(page, {
         headers: { 'Content-Type': 'text/html;charset=UTF-8' },
       })
     }
