@@ -15,8 +15,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^3.8.3",
-    "wrangler": "^4.95.0"
+    "prettier": "^3.9.5",
+    "wrangler": "^4.110.0"
   },
   "dependencies": {
     "@fontsource/geist-mono": "^5.2.8",
