@@ -4,12 +4,12 @@
 
 `pnpm` `Cloudflare Workers` `Backblaze B2` `aws4fetch`
 
-## 📖 Overview
+## Overview
 
 Deliver assets fast and secure for the Nanoo Labs ecosystem.
 Proxies a private Backblaze B2 bucket throug Cloudflare Workers with AWS SigV4 signing, edge caching, and CORS enforcement. No egress costs. Origin stays hidden.
 
-## 🏗️ Architecture & Tech Stack
+##Architecture & Tech Stack
 
 - **Runtime:** Cloudflare worker (V8 Isolate)
 - **Auth:** AWS SigV4 via `aws4fetch`
@@ -17,7 +17,7 @@ Proxies a private Backblaze B2 bucket throug Cloudflare Workers with AWS SigV4 s
 - **Cache:** Cloudflare Cache API
 - **Language:** Vanilla JS (no build step)
 
-## 🚀 Quickstart
+## Quickstart
 
 ```bash
 # 1. Install and setup env
@@ -39,7 +39,7 @@ pnpm dlx wrangler secret put B2_APPLICATION_KEY
 pnpm dlx wrangler secret put ALLOWED_ORIGINS
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 ├── src/
@@ -56,7 +56,7 @@ pnpm dlx wrangler secret put ALLOWED_ORIGINS
 └── ARCHITECTURE.md       # System design
 ```
 
-## ⚙️ Development & Ops
+## evelopment & Ops
 
 - **Format:** `pnpm run format` (Prettier, no-semi)
 - **Deploy:** Auto on push to `main` via GitHub actions
@@ -65,20 +65,20 @@ pnpm dlx wrangler secret put ALLOWED_ORIGINS
 
 ---
 
-## 🌐 Nanoo Labs Ecosystem
+## Nanoo Labs Ecosystem
 
 Part of [nanoolabs.dev](https://nanoolabs.dev) ecosystem.
 
-## 🤝 Contributing
+## Contributing
 
 1. Branch from `main` to `feat/name-feature`.
 2. Run `pnpm run format` before push.
 3. Use Conventional Commits (e.g. `feat: add cache invalidation`).
 
-## 📜 License
+## License
 
 MIT and Apache 2.0 — Nanoo Labs © 2026.
 
 ---
 
-*Based on [cloudflare-b2](https://github.com/backblaze-b2-samples/cloudflare-b2) template by Pat Patterson (@backblaze). Refactored and extended by Nanoo Labs.*
+_Based on [cloudflare-b2](https://github.com/backblaze-b2-samples/cloudflare-b2) template by Pat Patterson (@backblaze). Refactored and extended by Nanoo Labs._
