@@ -35,3 +35,5 @@ jobs:
           command: deploy
           secrets: |
             ALLOWED_ORIGINS
+        env:
+          ALLOWED_ORIGINS: ${{ secrets.ALLOWED_ORIGINS }}
