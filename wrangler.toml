@@ -12,12 +12,21 @@ compatibility_flags = [ "nodejs_compat" ]
 directory = "./public/"
 
 [vars]
+# B2 key ID is public
 B2_APPLICATION_KEY_ID = "0038f4a4d378b380000000013"
+# EU region S3-compatible endpoint
 B2_ENDPOINT = "s3.eu-central-003.backblazeb2.com"
+# Literal bucket name; set to "$path" or "$host" to route to multiple buckets via URL
 BUCKET_NAME = "nanoo-assets"
+# false = reject bucket listing at root (404); true = allow GET /?list-type=2
 ALLOW_LIST_BUCKET = "false"
+# true = strip the "file/{bucket}/" prefix rclone add via --b2-download-url
 RCLONE_DOWNLOAD = "false"
-CDN_VERSION = "2.2.5"
+# Whitelist of headers forwarded to the SigV4 signature. Keep x-amz-content-sha256,
+# or aws4fetch falls back to UNSIGNED-PAYLOAD
+ALLOWED_HEADERS = ["range", "x-amz-content-sha256"]
+# show version on home page
+CDN_VERSION = "2.2.6"
 
 [observability]
 enabled = true
