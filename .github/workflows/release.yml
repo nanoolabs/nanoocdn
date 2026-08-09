@@ -27,7 +27,7 @@ jobs:
           git push origin ${{ steps.get_version.outputs.VERSION }}
 
       - name: Generate Central Changelog
-        uses: nanoolabs/actions/release-action-v1
+        uses: nanoolabs/actions/release-action@release-action-v1
         id: release_tool
         with:
           version: ${{ steps.get_version.outputs.VERSION }}
