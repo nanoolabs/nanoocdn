@@ -31,9 +31,9 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: deploy
-          secrets: |
-            B2_APPLICATION_KEY
-            ALLOWED_ORIGINS
+          postCommands: |
+            printf '%s' "$B2_APPLICATION_KEY" | pnpm exec wrangler secret put B2_APPLICATION_KEY
+            printf '%s' "$ALLOWED_ORIGINS" | pnpm exec wrangler secret put ALLOWED_ORIGINS
         env:
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
           ALLOWED_ORIGINS: ${{ secrets.ALLOWED_ORIGINS }}
