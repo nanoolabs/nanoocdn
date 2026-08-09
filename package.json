@@ -1,13 +1,15 @@
 {
   "private": true,
-  "name": "cloudflare-b2",
+  "name": "nanoo-cdn",
   "version": "2.2.5",
   "description": "Provide access to a private Backblaze B2 bucket via a Cloudflare Worker",
   "main": "index.js",
+  "packageManager": "pnpm@11.16.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{js,json,md}'",
-    "setup": "cp .dev.vars.example .dev.vars"
+    "setup": "cp .dev.vars.example .dev.vars",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "author": "Adnan Slamet Wibowo <adnan@nanoolabs.dev>",
   "contributors": [
@@ -15,11 +17,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^3.9.5",
-    "wrangler": "^4.110.0"
+    "prettier": "^3.9.6",
+    "wrangler": "^4.120.0"
   },
   "dependencies": {
-    "@fontsource/geist-mono": "^5.2.8",
+    "@fontsource/geist-mono": "^5.3.0",
     "aws4fetch": "^1.0.20"
   }
 }
