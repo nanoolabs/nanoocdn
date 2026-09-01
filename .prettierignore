@@ -1,6 +1,9 @@
 # Wrangler Cloudflare
 .wrangler/**
 
+# GitHub workflows
+.github/
+
 # Ignore lockfiles
 pnpm-lock.yaml
 

@@ -92,7 +92,7 @@ export default {
     if (!isAllowed) {
       console.error(
         '[CORS] Unauthorized access attempt from:',
-        origin || refererOrigin || 'unknown'
+        origin || refererOrigin || 'unknown',
       )
       return new Response(errorPage, {
         status: 403,
@@ -181,14 +181,14 @@ export default {
           // Only log if it didn't work first time
           if (attempts < RANGE_RETRY_ATTEMPTS) {
             log(
-              `[B2] Retry for ${signedRequest.url} succeeded - response has content-range header`
+              `[B2] Retry for ${signedRequest.url} succeeded - response has content-range header`,
             )
           }
           break
         } else if (response.ok) {
           attempts -= 1
           console.error(
-            `[B2] Range header in request for ${signedRequest.url} but no content-range header in response. Will retry ${attempts} more times`
+            `[B2] Range header in request for ${signedRequest.url} but no content-range header in response. Will retry ${attempts} more times`,
           )
           // Do not abort on the last attempt, as we want to return the response
           if (attempts > 0) {
@@ -202,7 +202,7 @@ export default {
 
       if (attempts <= 0) {
         console.error(
-          `[B2] Tried range request for ${signedRequest.url} ${RANGE_RETRY_ATTEMPTS} times, but no content-range in response.`
+          `[B2] Tried range request for ${signedRequest.url} ${RANGE_RETRY_ATTEMPTS} times, but no content-range in response.`,
         )
       }
     } else {
@@ -268,12 +268,12 @@ export default {
       if (staticExtension.includes(extension)) {
         response.headers.set(
           'Cache-Control',
-          'public, max-age=31536000, immutable'
+          'public, max-age=31536000, immutable',
         )
       } else {
         response.headers.set(
           'Cache-Control',
-          'public, max-age=3600, must-revalidate'
+          'public, max-age=3600, must-revalidate',
         )
       }
 
@@ -293,7 +293,7 @@ export default {
     if (requestMethod === 'HEAD') {
       // Original request was HEAD, so return a new Response without a body
       return createHeadResponse(
-        new Response(null, { headers: finalHeaders, status: response.status })
+        new Response(null, { headers: finalHeaders, status: response.status }),
       )
     }
 
