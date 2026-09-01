@@ -31,3 +31,110 @@ body {
 html {
   color-scheme: dark;
 }
+
+/* Home page */
+body.home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+body.home header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+body.home .brand {
+  color: var(--text-bright);
+  font-weight: 500;
+}
+
+body.home .status-tag {
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+body.home main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body.home .hero {
+  max-width: 600px;
+}
+
+body.home h1 {
+  color: var(--text-bright);
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.04em;
+}
+
+body.home .specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+body.home .spec-item .label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 10px;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  opacity: 0.5;
+}
+
+body.home .spec-item .value {
+  color: var(--text-bright);
+  font-weight: 400;
+}
+
+body.home footer {
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  opacity: 0.4;
+}
+
+/* Error page */
+body.error {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+body.error .container {
+  border-left: 2px solid var(--accent);
+  padding: 1rem 2rem;
+}
+
+body.error .code {
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+body.error .message {
+  opacity: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
