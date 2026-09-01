@@ -30,6 +30,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
           postCommands: |
             printf '%s' "$B2_APPLICATION_KEY" | pnpm exec wrangler secret put B2_APPLICATION_KEY
