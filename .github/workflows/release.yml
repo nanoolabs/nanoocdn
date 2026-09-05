@@ -24,8 +24,12 @@ jobs:
       - name: Create Tag
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         run: |
-          git tag ${{ steps.get_version.outputs.VERSION }}
-          git push origin ${{ steps.get_version.outputs.VERSION }}
+          if ! git rev-parse "${{ steps.get_version.outputs.VERSION }}" >/dev/null 2>&1; then
+            git tag ${{ steps.get_version.outputs.VERSION }}
+            git push origin ${{ steps.get_version.outputs.VERSION }}
+          else
+            echo "Tag ${{ steps.get_version.outputs.VERSION }} already exists, skipping"
+          fi
 
       - name: Generate Central Changelog
         uses: nanoolabs/actions/release-action@v2
